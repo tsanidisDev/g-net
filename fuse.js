@@ -58,7 +58,7 @@ context(
                     clearTerminalOnBundle: false, // Clear the terminal window every time we bundle
                 },
                 plugins,
-                hash: true,
+                hash: this.isProduction,
             });
         }
 
