@@ -1,0 +1,31 @@
+{
+  "name": "g-net",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "rm -Rf .fusebox && node fuse watch",
+    "publish": "rm -Rf .fusebox && node fuse publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsanidisDev/g-net.git"
+  },
+  "author": "Tsanidis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tsanidisDev/g-net/issues"
+  },
+  "homepage": "https://github.com/tsanidisDev/g-net#readme",
+  "dependencies": {
+    "fuse-box": "^3.7.1",
+    "fuse-box-typechecker": "^2.11.0",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "source-map": "^0.7.3",
+    "typescript": "^3.9.2"
+  }
+}
