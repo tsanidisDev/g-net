@@ -20,6 +20,7 @@
   "homepage": "https://github.com/tsanidisDev/g-net#readme",
   "dependencies": {
     "@types/react": "^16.0.25",
+    "animate.css": "^4.1.0",
     "firebase": "^7.14.6",
     "fuse-box": "^3.7.1",
     "fuse-box-typechecker": "^2.11.0",

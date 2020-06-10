@@ -1,0 +1,33 @@
+//TODO vars
+
+/*************************/
+///// COMPONENT CODE //////
+/*************************/
+
+
+.name{
+    
+}
+
+@include SmallDevice{
+    .name{
+    }
+}
+
+
+@include MediumDevice{
+    .name{
+    }
+}
+
+@include OnEmbedDevice(){
+    .name{
+
+    }
+}
+
+
+/*************************/
+/////// CUSTOM CODE /////// 
+/*************************/
+//TODO code

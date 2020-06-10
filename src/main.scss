@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
-@import "./controllers/controllers.scss";
-@import "./pages/pages.scss";
-@import "./components/components.scss";
+@import "./theme/settings";
+@import "./theme/variables";
 @import "./theme/theme";
+
+@import "./pages/pages";
+@import "./controllers/controllers";
+@import "./components/components";

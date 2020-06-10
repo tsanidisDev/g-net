@@ -1,0 +1,43 @@
+//TODO vars
+
+$circle_r: 12.5px;
+$circle_d: $circle_r * 2;
+$circle_count: 3;
+/*************************/
+///// COMPONENT CODE //////
+/*************************/
+
+.ldr {
+    height: 100%;
+    width: 100%;
+    @include flexC;
+    justify-content: center;
+
+    &__cr {
+        height: $circle_d;
+        width: $circle_d;
+        animation-name: slideInUp, fadeIn;
+        animation-duration: 1s, 1s;
+        animation-iteration-count: infinite, infinite;
+    }
+}
+
+@include SmallDevice {
+    .ldr {
+    }
+}
+
+@include MediumDevice {
+    .ldr {
+    }
+}
+
+@include OnEmbedDevice() {
+    .ldr {
+    }
+}
+
+/*************************/
+/////// CUSTOM CODE ///////
+/*************************/
+//TODO code
