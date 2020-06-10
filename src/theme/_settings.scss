@@ -1,0 +1,40 @@
+/*
+* Common Variables
+*/
+
+//colors
+$color-1: #00090f !default;
+$color-2: #fff !default;
+
+$gn-black: #2b2b2b;
+$gn-green: #0ef907;
+$gn-blue: #0000ff;
+//-----
+
+$font-1: "roboto", monospace;
+$font-2: "", sans-serif;
+
+$res-url: "";
+
+$hdr-height-sml: 50px;
+$hdr-height-land: 50px;
+$hdr-height-tblt: 70px;
+$hdr-height-lrg: 70px;
+
+/****************************
+*****************************
+**** COMPONENT VARIABLES ****
+*****************************
+*****************************/
+
+// display flex mixins
+@mixin flexC {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+}
+@mixin flexR {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+}

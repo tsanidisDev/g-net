@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { IS_MOBILE, IS_EMBED } from './config';
-import App from './controllers/App/App';
 import "./main.scss";
+import store from './controllers/App/App_store';
+import { App } from './controllers/App/App';
+
 
 (function () {
 
@@ -12,12 +14,9 @@ import "./main.scss";
     if (IS_EMBED) {
         document.querySelector("body").classList.add("embed");
     }
-    if (typeof document !== "undefined") {
-        ReactDOM.render(
-            <App />
-            , document.getElementById('SiteContainer'), () => {
-            });
-    } else {
-        return App;
-    }
+
+    ReactDOM.render(
+        <App store={store} />
+        , document.getElementById('SiteContainer'), () => {
+        });
 }());

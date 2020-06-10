@@ -31,7 +31,20 @@ context(
                     }),
 
                 ],
-                EnvPlugin({ NODE_ENV: this.isProduction ? "production" : "development" }),
+                EnvPlugin(
+                    {
+                        NODE_ENV: this.isProduction ? "production" : "development",
+                        FB_CONFIG: {
+                            apiKey: "AIzaSyCBqto9Am0yJYXC3PCen6s0G3krVoW1Pbk",
+                            authDomain: "g-net-cf48e.firebaseapp.com",
+                            databaseURL: "https://g-net-cf48e.firebaseio.com",
+                            projectId: "g-net-cf48e",
+                            storageBucket: "g-net-cf48e.appspot.com",
+                            messagingSenderId: "964354863726",
+                            appId: "1:964354863726:web:a0bcb9fd0cd35fdb9a2c7f",
+                            measurementId: "G-BQY9QM4ZZF"
+                        }
+                    }),
                 // this.isProduction && WebIndexPlugin(),
                 this.isProduction && QuantumPlugin({
                     css: true,
