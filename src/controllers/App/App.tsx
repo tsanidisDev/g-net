@@ -3,6 +3,7 @@ import { HashRouter as Router, Route, Switch, } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import DataStore from '../../stores/dataStore';
 import { Loader } from '../../components/Loader/Loader';
+import Home from '../../pages/Home/Home';
 
 export interface AppProps {
     store: any;
@@ -35,13 +36,12 @@ export class App extends React.Component<AppProps, any> {
             return (<Loader />)
         }
         let props = this.props;
-        console.log(this.dataStore.data, this.props.store.data)
         return (
             <div className="app">
                 <h1>{`LOADED DATA: ${this.props.store.data}`}</h1>
                 <Router hashType="noslash">
                     <Switch>
-                        {/* <Route exact path="/" component={ContentPage} /> */}
+                        <Route exact path="/" component={Home} />
                     </Switch>
                 </Router>
             </div>

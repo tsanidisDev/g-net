@@ -1,0 +1,28 @@
+//TODO vars
+
+/*************************/
+///// COMPONENT CODE //////
+/*************************/
+
+.hdr {
+}
+
+@include SmallDevice {
+    .hdr {
+    }
+}
+
+@include MediumDevice {
+    .hdr {
+    }
+}
+
+@include OnEmbedDevice() {
+    .hdr {
+    }
+}
+
+/*************************/
+/////// CUSTOM CODE ///////
+/*************************/
+//TODO code
