@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+
 import { IS_MOBILE, IS_EMBED } from './config';
 import "./main.scss";
 import store from './controllers/App/App_store';
@@ -15,8 +17,10 @@ import { App } from './controllers/App/App';
         document.querySelector("body").classList.add("embed");
     }
 
-    ReactDOM.render(
-        <App store={store} />
+    ReactDOM.hydrate(
+        <BrowserRouter>
+            <App store={store} />
+        </BrowserRouter>
         , document.getElementById('SiteContainer'), () => {
         });
 }());

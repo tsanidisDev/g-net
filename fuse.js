@@ -63,7 +63,7 @@ context(
                 homeDir: "src",
                 target: "browser@es5",
                 useTypescriptCompiler: true,
-                output: "public/js/$name.js",
+                output: "public/dist/$name.js",
                 sourceMaps: !this.isProduction,
                 dynamicImportsEnabled: true,
                 log: {
@@ -100,7 +100,7 @@ context(
 
             fuse
                 .bundle("bundle")
-                .instructions(" > index.tsx")
+                .instructions(" > client/index.tsx")
             return fuse.run();
         }
 
@@ -112,16 +112,25 @@ context(
             fuse.dev({
                 root: "public/",
                 fallback: "index.html",
+                port: 4445,
+                httpServer: false,
             });
 
             fuse
-                .bundle("bundle")
-                .instructions(" > index.tsx")
+                .bundle("server/server_bundle")
+                .instructions(" > [server/index.tsx]")
+                .watch("server/**")
+                .completed(proc => proc.start());
+
+            fuse
+                .bundle("client/bundle")
+                .instructions(" > client/index.tsx")
                 .hmr()
-                .watch()
+                .watch("client/**")
                 .completed((e) => {
                     runTypeChecker();
                 });
+
 
             return fuse.run();
         }
@@ -131,7 +140,7 @@ context(
 // get typechecker 
 const typechecker = TypeChecker({
     tsConfig: './tsconfig.json',
-    name: 'src',
+    name: 'src/client/',
     basePath: './',
     yellowOnLint: true,
     shortenFilenames: true
