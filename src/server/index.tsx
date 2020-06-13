@@ -9,4 +9,8 @@ app.get('/', function (req, res) {
     res.send('Hello World');
 });
 
-app.listen(4000);
+const server = app.listen(4000, function () {
+    // server.close(function () { console.log("closed") })
+});
+
+server;

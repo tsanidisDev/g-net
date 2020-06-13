@@ -19,7 +19,6 @@ task("watch", async context => {
 context(
     class {
         getConfig() {
-
             let plugins = [
                 [
                     SassPlugin({
@@ -53,7 +52,7 @@ context(
                 }),
                 WebIndexPlugin({
                     template: "public/templates/index-template.html",
-                    path: "js/",
+                    path: "dist/",
                     target: "../index.html",
                     // cssPath: "css/"
                 }),
@@ -76,9 +75,11 @@ context(
         }
 
         async clean() {
-            await src("./public/js")
-                .clean("public/js/")
-                .exec();
+            await new Promise((res, rej) => {
+                res(src("./public/dist")
+                    .clean("public/dist/")
+                    .exec());
+            })
         }
 
         async prepareDistFolder() {
@@ -106,33 +107,34 @@ context(
 
         watch() {
             const fuse = this.getConfig();
-            this.clean();
-
             this.isProduction = false;
+
             fuse.dev({
                 root: "public/",
                 fallback: "index.html",
-                port: 4445,
-                httpServer: false,
+                port: 4444,
+                httpServer: true,
             });
 
-            fuse
-                .bundle("server/server_bundle")
-                .instructions(" > [server/index.tsx]")
-                .watch("server/**")
-                .completed(proc => proc.start());
+            this.clean().then((res) => {
+                fuse
+                    .bundle("server/server_bundle")
+                    .instructions(" > [server/index.tsx]")
+                    .watch("server/**")
+                    .completed(proc => proc.start());
 
-            fuse
-                .bundle("client/bundle")
-                .instructions(" > client/index.tsx")
-                .hmr()
-                .watch("client/**")
-                .completed((e) => {
-                    runTypeChecker();
-                });
+                fuse
+                    .bundle("client/bundle")
+                    .instructions(" > client/index.tsx")
+                    .hmr()
+                    .watch("client/**")
+                    .completed((e) => {
+                        runTypeChecker();
+                    });
+                return fuse.run();
+            });
 
 
-            return fuse.run();
         }
     }
 )
