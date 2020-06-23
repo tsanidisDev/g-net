@@ -2,6 +2,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import { FB_CONFIG } from '.';
 
 class Firebase {
     serverValue: any;
@@ -13,7 +14,7 @@ class Firebase {
     db: any;
     user: any;
     constructor() {
-        app.initializeApp(process.env.FB_CONFIG);
+        app.initializeApp(FB_CONFIG);
 
         /* Helper */
 

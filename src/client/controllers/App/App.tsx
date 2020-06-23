@@ -6,7 +6,7 @@ import { Loader } from '../../components/Loader/Loader';
 import Home from '../../pages/Home/Home';
 
 export interface AppProps {
-    store: any;
+    store?: any;
 }
 
 @observer
@@ -38,10 +38,11 @@ export class App extends React.Component<AppProps, any> {
         let props = this.props;
         return (
             <div className="app">
-                <h1>{`LOADED DATA: ${this.props.store.data}`}</h1>
+                {/* <h1>{`LOADED DATA: ${this.props.store.data}`}</h1> */}
+                <h1>{`LOADED DATA: SSR`}</h1>
                 <Router hashType="noslash">
                     <Switch>
-                        <Route exact path="/" component={Home} />
+                        <Route exact path="/" render={() => <Home></Home>} />
                     </Switch>
                 </Router>
             </div>

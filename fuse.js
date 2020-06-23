@@ -1,4 +1,4 @@
-const { FuseBox, SassPlugin, CSSPlugin, WebIndexPlugin, EnvPlugin, QuantumPlugin } = require("fuse-box");
+const { http, FuseBox, SassPlugin, CSSPlugin, WebIndexPlugin, EnvPlugin, QuantumPlugin, JSONPlugin } = require("fuse-box");
 const { src, task, context, bumpVersion } = require("fuse-box/sparky");
 
 //load all fusebox stuff, not showing here
@@ -7,12 +7,12 @@ const { TypeChecker } = require('fuse-box-typechecker');
 
 
 task("publish", async context => {
-    // await context.clean(); 
+    await context.clean();
     await context.publish();
 });
 
 task("watch", async context => {
-    // await context.clean(); 
+    await context.clean();
     await context.watch();
 })
 
@@ -30,6 +30,7 @@ context(
                     }),
 
                 ],
+                JSONPlugin(),
                 EnvPlugin(
                     {
                         NODE_ENV: this.isProduction ? "production" : "development",
@@ -44,26 +45,25 @@ context(
                             measurementId: "G-BQY9QM4ZZF"
                         }
                     }),
-                // this.isProduction && WebIndexPlugin(),
                 this.isProduction && QuantumPlugin({
                     css: true,
                     uglify: { es6: true },
                     bakeApiIntoBundle: "bundle",
                 }),
-                WebIndexPlugin({
-                    template: "public/templates/index-template.html",
-                    path: "dist/",
-                    target: "../index.html",
-                    // cssPath: "css/"
-                }),
+                // this.isProduction && WebIndexPlugin({
+                //     template: "public/templates/index-template.html",
+                //     path: "dist/",
+                //     target: "../index.html",
+                //     // cssPath: "css/"
+                // }),
             ]
 
             return FuseBox.init({
-                homeDir: "src",
+                homeDir: "src/",
+                output: "public/dist/$name.js",
                 target: "browser@es5",
                 useTypescriptCompiler: true,
-                output: "public/dist/$name.js",
-                sourceMaps: !this.isProduction,
+                // sourceMaps: !this.isProduction,
                 dynamicImportsEnabled: true,
                 log: {
                     showBundledFiles: false, // Don't list all the bundled files every time we bundle
@@ -71,6 +71,11 @@ context(
                 },
                 plugins,
                 hash: this.isProduction,
+                natives: {
+                    // process: false,
+                    // http: false
+                },
+                allowSyntheticDefaultImports: true,
             });
         }
 
@@ -85,14 +90,13 @@ context(
         async prepareDistFolder() {
             await bumpVersion("package.json", { type: "patch" });
             await src("./package.json")
-                .dest("dist/")
+                .dest("public/")
                 .exec();
         }
 
         publish() {
             this.isProduction = true;
             const fuse = this.getConfig();
-            this.clean();
 
             fuse.dev({
                 root: "public/",
@@ -106,35 +110,37 @@ context(
         }
 
         watch() {
-            const fuse = this.getConfig();
             this.isProduction = false;
+            const fuse = this.getConfig();
 
             fuse.dev({
-                root: "public/",
-                fallback: "index.html",
                 port: 4444,
-                httpServer: true,
+                httpServer: false,
             });
 
-            this.clean().then((res) => {
-                fuse
-                    .bundle("server/server_bundle")
-                    .instructions(" > [server/index.tsx]")
-                    .watch("server/**")
-                    .completed(proc => proc.start());
+            // fuse
+            //     .bundle("vendor/vendor")
+            //     .watch()
+            //     .hmr()
+            //     .instructions(" ~ ./index.tsx")
 
-                fuse
-                    .bundle("client/bundle")
-                    .instructions(" > client/index.tsx")
-                    .hmr()
-                    .watch("client/**")
-                    .completed((e) => {
-                        runTypeChecker();
-                    });
-                return fuse.run();
-            });
+            // this.clean().then((res) => {
+            fuse
+                .bundle("server/bundle")
+                .watch("server/**")
+                .instructions(" > [server/index.tsx]")
+                .completed(proc => proc.start());
+            fuse
+                .bundle("client/app")
+                .watch("client/**")
+                .hmr()
+                .instructions(" > client/index.tsx")
+                .completed((e) => {
+                    runTypeChecker();
+                });
 
-
+            fuse.run();
+            // });
         }
     }
 )

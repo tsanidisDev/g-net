@@ -1,5 +1,5 @@
 import { observable, action, computed } from "mobx";
-import Firebase from "../services/Firebase";
+import Firebase from "../../server/Firebase";
 
 
 class DataStore {

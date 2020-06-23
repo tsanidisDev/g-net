@@ -8,6 +8,7 @@ import store from './controllers/App/App_store';
 import { App } from './controllers/App/App';
 
 
+
 (function () {
 
     if (IS_MOBILE) {
@@ -19,7 +20,7 @@ import { App } from './controllers/App/App';
 
     ReactDOM.hydrate(
         <BrowserRouter>
-            <App store={store} />
+            <App />
         </BrowserRouter>
         , document.getElementById('SiteContainer'), () => {
         });
